@@ -134,6 +134,9 @@ public class Main {
         System.out.println("Creating Scoreboard");
         System.out.println("--------------------------");
 
+        //Include Nadeo scores
+        scores.addAll(Score.nadeoScores());
+        //Sort scores
         sort(scores);
         maps = Score.listMaps(scores);
         categories = Score.listCategories(scores);

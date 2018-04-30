@@ -5,6 +5,9 @@ public class HTML {
 
     public static String generateHTML(ArrayList<String> categories, ArrayList<String> maps, ArrayList<Score> scores, HashMap<String, String> myHashMap) {
 
+        String delay = "";
+        String additionalStyle = "";
+
         String htmlOutput = new String("<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<head>\n" +
@@ -19,6 +22,7 @@ public class HTML {
                 "body{\n" +
                 "background-color: #EEEEEE;\n" +
                 "background-repeat: no-repeat;\n" +
+                "background-attachment: fixed;\n" +
                 "background-attachment: fixed;\n" +
                 "}\n" +
                 "</style>\n" +
@@ -72,6 +76,7 @@ public class HTML {
                             "      <th scope=\"col\">#</th>\n" +
                             "      <th scope=\"col\">Player</th>\n" +
                             "      <th scope=\"col\">Time</th>\n" +
+                            "      <th scope=\"col\">Delay</th>\n" +
                             "    </tr>\n" +
                             "  </thead>\n" +
                             "   <tbody>\n");
@@ -81,10 +86,24 @@ public class HTML {
             for (int i = 0; i < scores.size(); i++) {
 
                 if (map.equals(scores.get(i).getMap())) {
-                    htmlOutput += new String(" <tr>\n" +
+
+                    if (rank > 1) {
+                        delay = Score.timeDifference(scores.get(i), scores.get(i - 1));
+                    } else {
+                        delay = "";
+                    }
+
+                    if (scores.get(i).getPseudo().equals("Nadeo")) {
+                        additionalStyle = " style=\"background-color:#249a10\"";
+                    } else {
+                        additionalStyle = "";
+                    }
+
+                    htmlOutput += new String(" <tr" + additionalStyle + ">\n" +
                             "      <th scope=\"row\">" + rank + "</th>\n" +
                             "      <td>" + scores.get(i).getPseudo() + "</td>\n" +
                             "      <td>" + scores.get(i).getTime() + "</td>\n" +
+                            "      <td>" + delay + "</td>\n" +
                             "    </tr>\n");
                     rank++;
                 }
